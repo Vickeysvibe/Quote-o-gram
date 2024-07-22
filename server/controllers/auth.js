@@ -35,6 +35,8 @@ export const loginUser = async (req, res) => {
     if (isMatch) {
       const token = createToken(res, user._id);
       res.status(200).send({ token, user });
+    } else {
+      res.status(401).send("Wrong password");
     }
   } catch (error) {
     res.status(500).send(error);

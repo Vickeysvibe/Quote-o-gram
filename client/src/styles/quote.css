@@ -1,0 +1,98 @@
+:root {
+  --animation-speed: 2s;
+  --primary-color: #fff;
+  --secondary-color: #000;
+  --background-color: #212121;
+  --text-color: #fff;
+  --font: sans-serif;
+  --square-container: 150px;
+  --square-ball-one: red;
+  --square-ball-two: #009eff;
+}
+
+/* Main Container */
+.tweet-container {
+  background: var(--primary-color);
+  padding: 1rem 2rem;
+  max-width: 400px;
+  min-width: 400px;
+  border-radius: 1.5rem;
+  user-select: none;
+  margin: 0.5rem 0;
+}
+
+/* the title and the twitter handle */
+.title {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.title img {
+  width: 30px;
+  border-radius: 10rem;
+  border: 1px solid wheat;
+  margin-right: 1rem;
+}
+
+.info h4 {
+  font-size: 0.7rem;
+}
+
+.info p {
+  font-size: 0.5rem;
+  color: gray;
+}
+
+/* Main Tweet */
+.tweet {
+  cursor: text;
+}
+
+.tweet p {
+  font-size: 0.8rem;
+}
+
+/* Tweet time and date section */
+
+.time-and-date {
+  color: gray;
+  font-size: 8px;
+}
+
+.time-and-date p span {
+  color: #1da1f2;
+}
+
+/* Bottom feedback section */
+.bottom-section {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  padding: 0.7rem 0;
+  place-items: center;
+}
+
+.bottom-section svg {
+  width: 1.25em;
+  cursor: pointer;
+  user-select: none;
+  opacity: 0.7;
+}
+
+.bottom-section svg:hover {
+  opacity: 1;
+}
+
+.comment {
+  display: flex;
+  align-items: center;
+  img {
+    height: 20px;
+    border-radius: 50%;
+    border: 0.2px black solid;
+  }
+  p {
+    padding: 0 20px;
+    font-size: 10px;
+  }
+}

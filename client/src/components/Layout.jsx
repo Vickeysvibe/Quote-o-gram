@@ -2,7 +2,10 @@ import React, { useEffect, useState } from "react";
 import Navbar from "./Navbar";
 import { useNavigate } from "react-router-dom";
 import { getUserDetails } from "../data/userData";
-
+import "../styles/layout.css";
+import { Profile } from "./Profile";
+import { Feed } from "./Feed";
+import { Side } from "./Side";
 export const Layout = () => {
   const [user, setUser] = useState({
     name: "",
@@ -26,6 +29,11 @@ export const Layout = () => {
   return (
     <div className="full">
       <Navbar user={user} />
+      <div className="container">
+        <Profile user={user} />
+        <Feed />
+        <Side />
+      </div>
     </div>
   );
 };

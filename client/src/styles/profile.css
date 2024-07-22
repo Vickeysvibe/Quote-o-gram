@@ -1,0 +1,25 @@
+.profile {
+  width: 20%;
+  height: 300px;
+  border-radius: 20px;
+  background-color: rgb(247, 253, 255);
+  h1 {
+    text-align: center;
+    font-size: 20px;
+  }
+  .image {
+    width: 100%;
+
+    display: flex;
+    justify-content: center;
+    img {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+    }
+  }
+  p {
+    text-align: center;
+    font-size: 10px;
+  }
+}

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getUserDetails } from "../data/userData";
+import { Layout } from "../components/Layout";
 export const HomePage = () => {
   const [user, setUser] = useState({
     name: "",
@@ -28,10 +29,11 @@ export const HomePage = () => {
   }, [navigate]);
   return (
     <div>
-      <h1>
+      {/* <h1>
         Home Page logged in as {user.name} and {user.email}
       </h1>
-      <button onClick={logout}>Logout</button>
+      <button onClick={logout}>Logout</button> */}
+      <Layout />
     </div>
   );
 };

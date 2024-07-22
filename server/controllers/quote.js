@@ -99,3 +99,44 @@ export const commentOnQuote = async (req, res) => {
     res.status(500).json({ message: error });
   }
 };
+
+//get all comments
+export const getComments = async (req, res) => {
+  try {
+    const comments = await Comments.find();
+    res.status(200).json(comments);
+  } catch (error) {
+    res.status(500).json({ message: error });
+  }
+};
+
+//get comments on a post
+export const getCommentsOnPost = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const comments = await Comments.find({ quote: id });
+    const commentsWithUserDetails = await Promise.all(
+      comments.map(async (comment) => {
+        const user = await User.findById(comment.user);
+        return {
+          ...comment.toObject(), // Convert comment to plain object if needed
+          user,
+        };
+      })
+    );
+    res.status(200).json(commentsWithUserDetails);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+//get one quote
+export const getOneQuote = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const quote = await Quotes.findById(id);
+    res.status(200).json(quote);
+  } catch (error) {
+    res.status(500).json({ message: error });
+  }
+};
