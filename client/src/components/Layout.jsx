@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
+import Navbar from "./Navbar";
 import { useNavigate } from "react-router-dom";
 import { getUserDetails } from "../data/userData";
-export const HomePage = () => {
+
+export const Layout = () => {
   const [user, setUser] = useState({
     name: "",
     email: "",
@@ -9,11 +11,6 @@ export const HomePage = () => {
     profilePic: "",
   });
   const navigate = useNavigate();
-  const logout = async (e) => {
-    e.preventDefault();
-    localStorage.removeItem("token");
-    navigate("/login");
-  };
   useEffect(() => {
     if (!localStorage.getItem("token")) {
       navigate("/login");
@@ -23,15 +20,12 @@ export const HomePage = () => {
         setUser({ name, email, description, profilePic });
       }
       getUser();
-      console.log(user);
     }
   }, [navigate]);
+
   return (
-    <div>
-      <h1>
-        Home Page logged in as {user.name} and {user.email}
-      </h1>
-      <button onClick={logout}>Logout</button>
+    <div className="full">
+      <Navbar user={user} />
     </div>
   );
 };

@@ -1,29 +1,51 @@
-import React, { useState } from "react";
-import side from "../assets/images/side.jpg";
+import React, { useEffect, useState } from "react";
 import "../styles/register.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+
 export const Register = () => {
-  const end_point = process.env.REACT_APP_API_URL + "/auth/register";
-  console.log(end_point);
+  const navigate = useNavigate();
   const [user, setUser] = useState({
     name: "",
     email: "",
     password: "",
     confirm_password: "",
   });
+  const [error, setError] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (user.password !== user.confirm_password) {
-      alert("Passwords do not match");
-    } else {
-      const { name, email, password } = user;
+    setError(""); // Reset error message
+    const { name, email, password, confirm_password } = user;
+
+    if (!name || !email || !password || !confirm_password) {
+      setError("All fields are required");
+      return;
+    }
+
+    if (password !== confirm_password) {
+      setError("Passwords do not match");
+      return;
+    }
+
+    try {
+      const end_point = process.env.REACT_APP_API_URL + "/auth/register";
+      console.log(end_point);
       const data = { name, email, password };
       const res = await axios.post(end_point, data);
       console.log(res.data);
+      navigate("/login");
+    } catch (err) {
+      setError("Registration failed. Please try again.");
+      console.error(err);
     }
   };
+
+  useEffect(() => {
+    if (localStorage.getItem("token")) {
+      navigate("/");
+    }
+  }, [navigate]);
 
   return (
     <div className="fullScreen">
@@ -33,6 +55,7 @@ export const Register = () => {
         </div>
         <div className="form">
           <h1>Register</h1>
+          {error && <p className="error">{error}</p>}
           <form onSubmit={handleSubmit}>
             <input
               type="text"
@@ -62,7 +85,7 @@ export const Register = () => {
             />
             <button type="submit">Register</button>
             <p>
-              Already a user ? <Link to={"/"}>Login</Link>
+              Already a user? <Link to={"/login"}>Login</Link>
             </p>
           </form>
         </div>
