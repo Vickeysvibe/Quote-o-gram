@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Navbar from "./Navbar";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { getUserDetails } from "../data/userData";
 import "../styles/layout.css";
 import { Profile } from "./Profile";
@@ -30,7 +30,7 @@ export const Layout = () => {
     <div className="full">
       <Navbar user={user} />
       <div className="container">
-        <Profile user={user} />
+        <Profile user={user} isAdmin={true} />
         <Feed />
         <Side />
       </div>

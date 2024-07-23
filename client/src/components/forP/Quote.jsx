@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from "react";
 import "../styles/quote.css";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
 
 export const Quote = ({ user: userProps }) => {
-  const navigate = useNavigate();
   const [showComment, setShowComment] = useState(false);
   const [comment, setComment] = useState("");
   const removeQuotes = (str) => str.replace(/^['"]|['"]$/g, "");
@@ -103,12 +101,7 @@ export const Quote = ({ user: userProps }) => {
   };
   return (
     <div className="tweet-container">
-      <div
-        className="title"
-        onClick={() => {
-          navigate(`/profile/${user._id}`);
-        }}
-      >
+      <div className="title">
         <img src={user.profilePic} alt="tweet" />
         <div className="info">
           <h4 className="name">{user.name}</h4>
