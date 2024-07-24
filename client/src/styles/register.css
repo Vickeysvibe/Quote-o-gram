@@ -2,7 +2,7 @@
   height: 300px;
   width: 50%;
   min-width: 500px;
-  background-color: black;
+  background-color: var(--secondary);
   display: flex;
   .clip {
     width: 50%;
@@ -19,7 +19,7 @@
     }
   }
   .form {
-    color: aliceblue;
+    color: var(--color);
     width: 50%;
     h1 {
       text-align: center;
@@ -38,11 +38,11 @@
         border: 0;
         padding: 7px 10px;
         margin: 5px 0px;
-        color: #ffffff;
+        color: var(--color);
       }
       button {
         cursor: pointer;
-        color: #ffffff;
+        color: var(--color);
         font-size: 10px;
         width: 80px;
         border: 0;
@@ -50,7 +50,7 @@
         margin-top: 10px;
         margin-left: -5px;
         border-radius: 5px;
-        background-color: rgb(34, 34, 34);
+        background-color: var(--primary);
       }
       p {
         font-size: 8px;

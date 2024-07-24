@@ -1,10 +1,9 @@
 import React, { useState } from "react";
 import FormatQuoteIcon from "@mui/icons-material/FormatQuote";
 import axios from "axios";
-import { Feeds } from "./Feeds";
+import "../styles/layout.css";
 export const Feed = () => {
   const path = process.env.REACT_APP_API_URL;
-  /*     const userId=localStorage.getItem("userId")*/
   const token = localStorage.getItem("token");
   const [quote, setQuote] = useState("");
 
@@ -28,7 +27,13 @@ export const Feed = () => {
   };
 
   return (
-    <div style={{ display: "flex", flexDirection: "column" }}>
+    <div
+      style={{
+        width: "100%",
+        display: "flex",
+        flexDirection: "column",
+      }}
+    >
       <div className="inPanel">
         <input
           type="text"
@@ -42,7 +47,6 @@ export const Feed = () => {
           <FormatQuoteIcon />
         </button>
       </div>
-      <Feeds />
     </div>
   );
 };

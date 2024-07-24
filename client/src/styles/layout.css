@@ -6,33 +6,39 @@
     justify-content: space-around;
     background-color: rgb(175, 175, 175);
     /*FEED*/
-    .inPanel {
-      width: 100%;
-      min-height: 100px;
-      display: flex;
-      align-items: center;
-      justify-content: space-evenly;
-      background-color: rgb(247, 253, 255);
-      border-radius: 20px;
-      margin-bottom: 0.5rem;
-      input {
-        width: 80%;
-        height: 30px;
-        padding: 0 10px;
-        border-radius: 50px;
-      }
-      button {
-        border-radius: 50%;
-        height: 30px;
-        width: 30px;
-        cursor: pointer;
-      }
-    }
 
     /*side*/
     .side {
       width: 200px;
       height: 500px;
     }
+  }
+}
+
+.inPanel {
+  width: 93%;
+  min-height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  background-color: var(--secondary);
+  border-radius: 20px;
+  margin: 0.5rem auto;
+  input {
+    width: 80%;
+    background-color: var(--primary);
+    height: 30px;
+    padding: 0 10px;
+    color: var(--color);
+    border-radius: 50px;
+  }
+  button {
+    color: var(--color);
+    background-color: var(--primary);
+    border-radius: 50%;
+    height: 30px;
+    border: 1px solid var(--color);
+    width: 30px;
+    cursor: pointer;
   }
 }

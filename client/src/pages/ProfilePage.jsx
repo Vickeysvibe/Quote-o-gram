@@ -1,54 +1,56 @@
 import React, { useEffect, useState } from "react";
-import Navbar from "../components/Navbar";
-import { useNavigate, useParams } from "react-router-dom";
-import { getUserDetails } from "../data/userData";
 import "../styles/layout.css";
-import { Profile } from "../components/Profile";
-import { Feed } from "../components/forP/Feed";
-import { Side } from "../components/Side";
+import { Quote } from "../components/Quote";
+import axios from "axios";
+import { useParams } from "react-router-dom";
+import { Layout } from "../components/Layout";
+import { getUserDetails } from "../data/userData";
 
 export const ProfilePage = () => {
   const { id } = useParams();
-  const navigate = useNavigate();
-  const [isAdmin, setIsAdmin] = useState(false);
-  const [user, setUser] = useState({
-    name: "",
-    email: "",
-    description: "",
-    profilePic: "",
-  });
-
+  const localUser = JSON.parse(localStorage.getItem("user"));
+  const userId = id ? id : localUser._id;
+  const [user, setUser] = useState({});
+  const [quotes, setQuotes] = useState([]);
+  const path = process.env.REACT_APP_API_URL;
   useEffect(() => {
-    if (!localStorage.getItem("token")) {
-      navigate("/login");
-    } else {
-      const checkAdmin = () => {
-        const userId = localStorage
-          .getItem("userId")
-          .replace(/^['"]|['"]$/g, "");
-        if (userId === id) {
-          setIsAdmin(true);
-        }
-      };
-
-      async function fetchUser() {
-        const { name, email, description, profilePic } = await getUserDetails();
-        setUser({ name, email, description, profilePic });
+    const effect = async () => {
+      try {
+        const response = await axios.get(
+          `${path}/quotes/${userId}/userQuotes`,
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+          }
+        );
+        setQuotes(response.data.reverse());
+        setUser(
+          id ? await getUserDetails(id) : await getUserDetails(localUser._id)
+        );
+      } catch (error) {
+        console.error("Error", error);
       }
-
-      checkAdmin();
-      fetchUser();
-    }
-  }, [id, navigate]);
+    };
+    effect();
+  }, [id, localUser._id, path, user, userId]);
 
   return (
-    <div className="full">
-      <Navbar user={user} />
-      <div className="container">
-        <Profile isAdmin={isAdmin} />
-        <Feed isAdmin={isAdmin} />
-        <Side isAdmin={isAdmin} />
+    <Layout>
+      <div className="main">
+        <h1>Quotes</h1>
+        <div className="user-profile">
+          <img src={user.profilePic} alt="user" />
+          <div className="user-info">
+            <h2>{user.name}</h2>
+            <h3>{user.email}</h3>
+            <p>{user.description}</p>
+          </div>
+        </div>
+        {quotes.map((user) => (
+          <Quote key={user._id} user={user} />
+        ))}
       </div>
-    </div>
+    </Layout>
   );
 };

@@ -12,13 +12,27 @@
 
 /* Main Container */
 .tweet-container {
-  background: var(--primary-color);
+  background: var(--secondary);
+  /*  border: 1px solid #7575754f; */
   padding: 1rem 2rem;
-  max-width: 400px;
-  min-width: 400px;
+  width: 88%;
   border-radius: 1.5rem;
   user-select: none;
-  margin: 0.5rem 0;
+  display: flex;
+  margin: 15px auto;
+}
+.quote-image {
+  width: 20%;
+  height: 130px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.quote-image img {
+  border-radius: 50%;
+  height: 50px;
+  width: 50px;
 }
 
 /* the title and the twitter handle */
@@ -26,6 +40,14 @@
   display: flex;
   align-items: center;
   cursor: pointer;
+  margin-left: 30px;
+  margin-top: 10px;
+  .info {
+    .name {
+      font-size: 10px;
+      margin: 0;
+    }
+  }
 }
 
 .title img {
@@ -47,16 +69,21 @@
 /* Main Tweet */
 .tweet {
   cursor: text;
+  margin-top: 20px;
 }
 
 .tweet p {
-  font-size: 0.8rem;
+  font-weight: 300;
+  font-size: 13px;
+  margin: 0;
+  margin-left: 30px;
 }
 
 /* Tweet time and date section */
 
 .time-and-date {
   color: gray;
+  margin-left: 30px;
   font-size: 8px;
 }
 
@@ -66,14 +93,15 @@
 
 /* Bottom feedback section */
 .bottom-section {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  padding: 0.7rem 0;
+  display: flex;
+  width: 100px;
+  justify-content: space-evenly;
+  margin: 0 30px;
   place-items: center;
 }
 
 .bottom-section svg {
-  width: 1.25em;
+  width: 1.5em;
   cursor: pointer;
   user-select: none;
   opacity: 0.7;
@@ -95,4 +123,9 @@
     padding: 0 20px;
     font-size: 10px;
   }
+}
+input {
+  color: var(--color);
+  background-color: var(--primary);
+  border: 1px solid var(--secondary);
 }

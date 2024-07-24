@@ -1,7 +1,7 @@
 import axios from "axios";
 
-export const getUserDetails = async () => {
-  const path = process.env.REACT_APP_API_URL + "/users/myProfile";
+export const getUserDetails = async (id) => {
+  const path = process.env.REACT_APP_API_URL + "/users/" + id;
   const token = localStorage.getItem("token");
 
   if (!token) {
@@ -12,7 +12,6 @@ export const getUserDetails = async () => {
     const response = await axios.get(path, {
       headers: { Authorization: `Bearer ${token}` },
     });
-
     return response.data; // Return only the data part of the response
   } catch (error) {
     console.error("Error fetching user details:", error);
