@@ -14,7 +14,14 @@ const app = express();
 //MIDDLEWARES
 app.use(bodyParser.json({ limit: "30mb", extended: true }));
 app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
-app.use(cors());
+const corsOptions = {
+  origin: "*", // Allow all origins (adjust this to be more secure)
+  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+  preflightContinue: false,
+  optionsSuccessStatus: 204,
+};
+
+app.use(cors(corsOptions));
 
 //CONNECT TO MONGODB
 connectDB(process.env.MONGODB_URL);
