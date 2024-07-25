@@ -2,24 +2,56 @@ import React, { useEffect, useState } from "react";
 import "../styles/quote.css";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { getUserDetails } from "../api/users/userData";
+import {
+  deleteQuote,
+  editQuote,
+  getLikesCount,
+  getQuote,
+  getQuoteComments,
+  likeQuote,
+} from "../api/quotes/quoteData";
+import editIcon from "../assets/svg/editIcon.svg";
+import deleteIcon from "../assets/svg/deleteIcon.svg";
 
-export const Quote = ({ user: userProps }) => {
+export const Quote = ({ quoteId, isAdmin }) => {
   const navigate = useNavigate();
+  const [quote, setQuote] = useState({});
   const [showComment, setShowComment] = useState(false);
   const [comment, setComment] = useState("");
-  const [like, setLike] = useState(
-    userProps.likes.includes(JSON.parse(localStorage.getItem("user"))._id)
-  );
-  const [user, setUser] = useState({
-    user: "",
-    name: "",
-    profilePic: "",
-    quote: "",
-  });
+  const [like, setLike] = useState(false);
+  const [user, setUser] = useState({});
   const [likeCount, setLikeCount] = useState(0);
   const [comments, setcomments] = useState([]);
-
+  const [editStatus, setEditStatus] = useState(false);
   const [theme, setTheme] = useState(localStorage.getItem("theme"));
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const fetchedQuote = await getQuote(quoteId);
+        setQuote(fetchedQuote);
+
+        if (fetchedQuote) {
+          const fetchedComments = await getQuoteComments(fetchedQuote._id);
+          setcomments(fetchedComments);
+          const fetchedUser = await getUserDetails(fetchedQuote.user);
+          setUser(fetchedUser);
+          const userId = JSON.parse(localStorage.getItem("user"))?._id;
+          if (userId) {
+            setLike(fetchedQuote.likes.includes(userId));
+          }
+          const fetchedLikeCount = await getLikesCount(fetchedQuote._id);
+          setLikeCount(fetchedLikeCount);
+        }
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+      }
+    };
+
+    fetchUserData();
+  }, [quoteId, showComment, editStatus]);
+
   useEffect(() => {
     const intervalId = setInterval(() => {
       const storedTheme = localStorage.getItem("theme");
@@ -33,34 +65,6 @@ export const Quote = ({ user: userProps }) => {
 
   const path = process.env.REACT_APP_API_URL;
 
-  useEffect(() => {
-    const fetchUserData = async () => {
-      try {
-        const response = await axios.get(`${path}/users/${userProps.user}`, {
-          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-        });
-        setUser(response.data);
-        const response1 = await axios.get(`${path}/quotes/${userProps._id}`, {
-          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-        });
-        setLikeCount(response1.data.likes.length);
-        const response2 = await axios.get(
-          `${path}/quotes/${userProps._id}/comments`,
-          {
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem("token")}`,
-            },
-          }
-        );
-        setcomments(response2.data);
-      } catch (error) {
-        console.error("Error fetching user data:", error);
-      }
-    };
-
-    fetchUserData();
-  }, [userProps.user, userProps._id, path, showComment]);
-
   const handleLike = async () => {
     try {
       const newLikeStatus = !like;
@@ -69,13 +73,7 @@ export const Quote = ({ user: userProps }) => {
         newLikeStatus ? prevCount + 1 : prevCount - 1
       );
 
-      await axios.put(
-        `${path}/quotes/${userProps._id}`,
-        {},
-        {
-          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-        }
-      );
+      await likeQuote(quote._id);
     } catch (error) {
       console.error("Error updating like:", error);
     }
@@ -85,7 +83,7 @@ export const Quote = ({ user: userProps }) => {
     e.preventDefault();
     try {
       await axios.put(
-        `${path}/quotes/${userProps._id}/comment`,
+        `${path}/quotes/${quote._id}/comment`,
         { content: comment },
         {
           headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
@@ -96,6 +94,19 @@ export const Quote = ({ user: userProps }) => {
     } catch (error) {
       console.log(error);
     }
+  };
+  const handleEditClick = () => {
+    setEditStatus(!editStatus);
+  };
+  const handleUpdateQuote = async (e) => {
+    e.preventDefault();
+    await editQuote(quote._id, quote.quote);
+    setEditStatus(!editStatus);
+  };
+
+  const handleDeleteQuote = async () => {
+    await deleteQuote(quote._id);
+    window.location.reload();
   };
   return (
     <div className="tweet-container">
@@ -112,12 +123,29 @@ export const Quote = ({ user: userProps }) => {
           <div className="info">
             <h4 className="name">{user.name}</h4>
           </div>
+          {isAdmin && (
+            <div className="utils">
+              <img onClick={handleEditClick} src={editIcon} alt="helllo" />
+              <img onClick={handleDeleteQuote} src={deleteIcon} alt="helllo" />
+            </div>
+          )}
         </div>
         <div className="tweet">
-          <p>" {userProps.quote} "</p>
+          {!editStatus ? (
+            <p>" {quote.quote} "</p>
+          ) : (
+            <form onSubmit={handleUpdateQuote}>
+              <input
+                type="text"
+                value={quote.quote}
+                onChange={(e) => setQuote({ ...quote, quote: e.target.value })}
+              />
+              <button type="submit">Update</button>
+            </form>
+          )}
         </div>
         <div className="time-and-date">
-          <p>{new Date(userProps.createdAt).toLocaleString()}</p>
+          <p>{new Date(quote.createdAt).toLocaleString()}</p>
         </div>
         <div className="bottom-section">
           {!like ? (

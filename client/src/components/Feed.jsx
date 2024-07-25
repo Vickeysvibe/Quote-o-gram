@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import FormatQuoteIcon from "@mui/icons-material/FormatQuote";
 import axios from "axios";
 import "../styles/layout.css";
-export const Feed = () => {
+export const Feed = ({ handleReload }) => {
   const path = process.env.REACT_APP_API_URL;
   const token = localStorage.getItem("token");
   const [quote, setQuote] = useState("");
@@ -18,7 +18,7 @@ export const Feed = () => {
 
       if (response.status === 201) {
         setQuote("");
-        alert("Quote sent successfully");
+        handleReload();
       }
     } catch (error) {
       console.error("Error sending quote:", error);
@@ -34,7 +34,7 @@ export const Feed = () => {
         flexDirection: "column",
       }}
     >
-      <div className="inPanel">
+      <form className="inPanel" onSubmit={handleSend}>
         <input
           type="text"
           placeholder="What's on your mind ?"
@@ -43,10 +43,10 @@ export const Feed = () => {
             setQuote(ev.target.value);
           }}
         />
-        <button onClick={handleSend}>
+        <button type="submit">
           <FormatQuoteIcon />
         </button>
-      </div>
+      </form>
     </div>
   );
 };

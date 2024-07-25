@@ -43,11 +43,13 @@ export const SideBar = () => {
     setActive(to);
     navigate(to === "home" ? "/" : to === "myProfile" ? "/profile" : "/");
   };
-
+  const handleRoute = () => {
+    navigate("/");
+  };
   return (
     <div className="sidebar">
       <div className="logo">
-        <img src={logo} alt="logo" />
+        <img onClick={handleRoute} src={logo} alt="logo" />
       </div>
       <ul>
         <li

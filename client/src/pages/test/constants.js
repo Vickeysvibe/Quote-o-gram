@@ -5,8 +5,8 @@ export const colorsB = {
   color: "#fff",
 };
 export const colorsL = {
-  primary: "#fefefe",
-  secondary: "#f5f7f7",
+  primary: "#f5f7f7",
+  secondary: "#fefefe",
   cyan: "#597cfe",
   color: "#000",
 };

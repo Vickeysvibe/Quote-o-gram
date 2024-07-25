@@ -2,8 +2,11 @@ import { React, useEffect, useState } from "react";
 import { Quote } from "../components/Quote.jsx";
 import axios from "axios";
 import { Feed } from "../components/Feed.jsx";
+import { useNavigate } from "react-router-dom";
 export const MainPage = () => {
   const [quotes, setQuotes] = useState([]);
+  const [reload, setReload] = useState(true);
+  const navigate = useNavigate();
   const path = process.env.REACT_APP_API_URL;
   useEffect(() => {
     const effect = async () => {
@@ -17,13 +20,19 @@ export const MainPage = () => {
       }
     };
     effect();
-  }, [path]);
+  }, [path, reload]);
+  const handleRoute = () => {
+    navigate("/");
+  };
+  const handleReload = () => {
+    setReload(!reload);
+  };
   return (
     <div className="main">
-      <h1>Quotes</h1>
-      <Feed />
-      {quotes.map((user) => (
-        <Quote key={user._id} user={user} />
+      <h1 onClick={handleRoute}>Quotes</h1>
+      <Feed handleReload={handleReload} />
+      {quotes.map((quote) => (
+        <Quote key={quote._id} quoteId={quote._id} />
       ))}
     </div>
   );

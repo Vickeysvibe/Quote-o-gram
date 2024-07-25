@@ -9,6 +9,7 @@
     width: 20%;
     height: 100%;
     .logo {
+      cursor: pointer;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -32,6 +33,7 @@
         }
       }
       li {
+        transition: 0.5s;
         cursor: pointer;
         width: 60%;
         margin: 10px 0;
@@ -49,6 +51,11 @@
         p {
           padding: 5px 10px;
         }
+      }
+      li:hover {
+        opacity: 0.6;
+        color: var(--cyan);
+        transition: 0.5s;
       }
     }
     .profile {
@@ -99,14 +106,15 @@
     h1 {
       text-align: center;
       color: var(--cyan);
+      cursor: pointer;
     }
     .user-profile {
       background: var(--secondary);
-      /*  border: 1px solid #7575754f; */
       padding: 1rem 2rem;
       width: 88%;
       border-radius: 1.5rem;
       display: flex;
+      justify-content: space-evenly;
       margin: 15px auto;
       img {
         height: 100px;
@@ -114,11 +122,13 @@
         border-radius: 50%;
       }
       .user-info {
-        h2 {
+        h2,
+        .h2 {
           font-size: 30px;
           margin: 0;
           margin-top: 20px;
           color: var(--cyan);
+          width: 100%;
         }
         h3 {
           font-weight: 200;
@@ -127,12 +137,33 @@
           color: var(--color);
           opacity: 0.3;
         }
-        p {
+        p,
+        .p {
           font-weight: 200;
+          width: 100%;
           color: var(--color);
           margin: 0;
           margin-top: 30px;
           font-size: 13px;
+        }
+        form {
+          button {
+            padding: 5px;
+            margin: 20px auto;
+            border-radius: 5px;
+            border: none;
+            cursor: pointer;
+          }
+        }
+      }
+      .edit {
+        display: flex;
+        width: 30%;
+        justify-content: end;
+        img {
+          cursor: pointer;
+          height: 20px;
+          border-radius: 0px;
         }
       }
     }

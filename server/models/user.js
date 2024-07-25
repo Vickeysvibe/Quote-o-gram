@@ -8,7 +8,7 @@ const userSchema = new mongoose.Schema({
   profilePic: {
     type: String,
     default:
-      "https://www.google.com/url?sa=i&url=https%3A%2F%2Ficonduck.com%2Ficons%2F6491%2Fprofile-default&psig=AOvVaw3ZL5IfMVTiY8bqvnK_Zdlx&ust=1721546866500000&source=images&cd=vfe&opi=89978449&ved=0CBEQjRxqFwoTCJj8gv6LtYcDFQAAAAAdAAAAABAE",
+      "https://i.pinimg.com/236x/47/ba/71/47ba71f457434319819ac4a7cbd9988e.jpg",
   },
 });
 
