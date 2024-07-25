@@ -2,7 +2,9 @@ import axios from "axios";
 
 const path = process.env.REACT_APP_API_URL + "/quotes";
 const token = localStorage.getItem("token");
+
 export const getUserQuotes = async (userId) => {
+  console.log(token);
   try {
     const response = await axios.get(`${path}/${userId}/userQuotes`, {
       headers: {

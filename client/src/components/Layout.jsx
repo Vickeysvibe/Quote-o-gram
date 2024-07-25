@@ -10,6 +10,7 @@ export const Layout = ({ children }) => {
   const [width, setWidth] = useState(window.innerWidth);
   const closeMenu = () => setMenuOpen(false);
   useEffect(() => {
+    console.log("layout");
     const handleResize = () => setWidth(window.innerWidth);
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
