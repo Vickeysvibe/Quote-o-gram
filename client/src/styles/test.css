@@ -5,6 +5,13 @@
   background-color: var(--primary);
   display: flex;
   justify-content: center;
+  .toggle {
+    display: none;
+    position: absolute;
+    float: left;
+    width: 9%;
+    margin-top: 20px;
+  }
   .sidebar {
     width: 20%;
     height: 100%;
@@ -103,6 +110,8 @@
     width: 50%;
     height: 100%;
     overflow-y: scroll;
+    overflow-x: hidden;
+
     h1 {
       text-align: center;
       color: var(--cyan);
@@ -243,18 +252,6 @@ input:checked + .slider:before {
   border-radius: 50%;
 }
 
-@media screen and (max-width: 768px) {
-  .sidebar {
-    display: none;
-  }
-  .overall .right {
-    display: none;
-  }
-  .overall .main {
-    width: 90%;
-  }
-}
-
 /* CSS */
 .button-9 {
   appearance: button;
@@ -277,4 +274,103 @@ input:checked + .slider:before {
   box-shadow: rgba(50, 50, 93, 0.1) 0 0 0 1px inset,
     rgba(50, 50, 93, 0.2) 0 6px 15px 0, rgba(0, 0, 0, 0.1) 0 2px 2px 0,
     rgba(50, 151, 211, 0.3) 0 0 0 4px;
+}
+
+@media screen and (max-width: 768px) {
+  .overall {
+    justify-content: flex-start;
+    .toggle {
+      display: block;
+    }
+    .right {
+      display: none;
+    }
+    .main {
+      width: 95%;
+      margin: 0 auto;
+      .user-profile {
+        padding: 0;
+        width: 90%;
+        img {
+          height: 80px;
+        }
+        .user-info {
+          h2,
+          .h2 {
+            font-size: 20px;
+          }
+          p,
+          .p {
+            font-size: 8px;
+            margin-top: 10px;
+          }
+        }
+        .edit {
+          img {
+            height: 15px;
+          }
+        }
+      }
+    }
+  }
+
+  /* layout.css */
+  .overall {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+  }
+
+  .toggle {
+    position: absolute;
+    top: 10px;
+    left: 30px;
+    cursor: pointer;
+  }
+  .sidebar {
+    min-width: 60vw;
+    padding: 0 30px;
+    background-color: var(--primary);
+    .side-extra {
+      width: 100%;
+      height: 50px;
+      background-color: var(--secondary);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 10px;
+    }
+  }
+
+  .sidebar- {
+    display: block;
+    position: fixed;
+    top: 0;
+    left: -80vw;
+    width: 80vw;
+    height: 100%;
+    z-index: 554;
+    overflow-x: scroll;
+    transition: left 0.3s ease;
+  }
+
+  .sidebar-open {
+    left: 0;
+  }
+
+  .overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 500; /* Make sure the overlay is below the sidebar but above the content */
+  }
+
+  .content {
+    flex: 1;
+    margin-left: 0;
+    transition: margin-left 0.3s;
+  }
 }

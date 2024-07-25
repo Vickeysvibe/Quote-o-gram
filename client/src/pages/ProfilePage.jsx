@@ -4,7 +4,7 @@ import { Quote } from "../components/Quote";
 import { useNavigate, useParams } from "react-router-dom";
 import { Layout } from "../components/Layout";
 import { getUserDetails, updateUser } from "../api/users/userData";
-import { deleteQuote, getUserQuotes } from "../api/quotes/quoteData";
+import { getUserQuotes } from "../api/quotes/quoteData";
 import editProfile from "../assets/svg/editProfile.svg";
 
 export const ProfilePage = () => {

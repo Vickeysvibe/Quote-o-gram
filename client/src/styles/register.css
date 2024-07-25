@@ -69,4 +69,9 @@
       width: 100%;
     }
   }
+  .fullScreen {
+    background-image: url("../assets/images/side.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
 }

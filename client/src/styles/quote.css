@@ -38,7 +38,7 @@
 /* the title and the twitter handle */
 .title {
   display: flex;
-  width: 400px;
+  width: 37vw;
   align-items: center;
   justify-content: space-between;
   cursor: pointer;
@@ -78,6 +78,7 @@
 .tweet {
   cursor: text;
   margin-top: 20px;
+
   form {
     input {
       font-weight: 300;
@@ -96,6 +97,7 @@
 }
 
 .tweet p {
+  width: 60vw;
   font-weight: 300;
   font-size: 13px;
   margin: 0;
@@ -151,4 +153,13 @@ input {
   color: var(--color);
   background-color: var(--primary);
   border: 1px solid var(--secondary);
+}
+
+@media screen and (max-width: 768px) {
+  .tweet-container {
+    width: 75vw;
+  }
+  .title {
+    width: 60vw;
+  }
 }

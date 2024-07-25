@@ -5,7 +5,9 @@ import about from "../assets/svg/about.svg";
 import { useLocation, useNavigate } from "react-router-dom";
 import logo from "../assets/images/logo.png";
 import axios from "axios";
+import { changeTheme } from "./test/injectCss";
 export const SideBar = () => {
+  const [width, setWidth] = useState(window.innerWidth);
   const { pathname } = useLocation();
   const navigate = useNavigate();
   const [active, setActive] = useState(
@@ -38,7 +40,9 @@ export const SideBar = () => {
     localStorage.removeItem("userId");
     navigate("/login");
   };
-
+  const handleThemeChange = () => {
+    changeTheme();
+  };
   const handleRouting = (to) => {
     setActive(to);
     navigate(to === "home" ? "/" : to === "myProfile" ? "/profile" : "/");
@@ -92,6 +96,16 @@ export const SideBar = () => {
           Log out
         </button>
       </div>
+      {width >= 768 ? (
+        <></>
+      ) : (
+        <div className="side-extra">
+          <label className="switch">
+            <input onChange={handleThemeChange} type="checkbox" />
+            <span className="slider round"></span>
+          </label>
+        </div>
+      )}
     </div>
   );
 };
