@@ -22,11 +22,6 @@ app.use(cors({ origin: true, credentials: true }));
 connectDB(process.env.MONGODB_URL);
 
 // ROUTES
-app.use((req, res, next) => {
-  console.log(`${req.method} ${req.url}`);
-  console.log("Headers:", req.headers);
-  next();
-});
 
 app.use("/", testRoute);
 app.use("/api/auth", authRoutes);
