@@ -1,6 +1,5 @@
 import express from "express";
 import { verifyTokens } from "../middlewares/verifyTokens.js";
-import debug from "../middlewares/debug.js";
 import {
   commentOnQuote,
   createQuote,
@@ -16,7 +15,7 @@ import {
 
 const router = express.Router();
 
-router.get("/", debug, verifyTokens, getQuotes);
+router.get("/", verifyTokens, getQuotes);
 router.get("/:id", verifyTokens, getOneQuote);
 router.get("/:id/userQuotes", verifyTokens, getUserQuotes);
 router.post("/newQuote", verifyTokens, createQuote);

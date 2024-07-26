@@ -16,18 +16,18 @@ const app = express();
 app.use(bodyParser.json({ limit: "30mb", extended: true }));
 app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
 
-// Configure CORS
-const corsOptions = {
-  origin: "https://quote-o-gram.vercel.app", // Your frontend URL
-  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-  credentials: true, // Allow credentials (cookies, authorization headers, etc.)
-};
-app.use(cors(corsOptions));
+app.use(cors({ origin: true, credentials: true }));
 
 // CONNECT TO MONGODB
 connectDB(process.env.MONGODB_URL);
 
 // ROUTES
+app.use((req, res, next) => {
+  console.log(`${req.method} ${req.url}`);
+  console.log("Headers:", req.headers);
+  next();
+});
+
 app.use("/", testRoute);
 app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
