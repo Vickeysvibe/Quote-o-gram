@@ -7,6 +7,7 @@ import userRoutes from "./routes/userRoutes.js";
 import authRoutes from "./routes/authRoutes.js";
 import quoteRoutes from "./routes/quoteRoutes.js";
 import testRoute from "./routes/testRoute.js";
+import imageUpload from "./routes/imageUpload.js";
 
 // CONFIGURATION
 dotenv.config();
@@ -24,6 +25,7 @@ connectDB(process.env.MONGODB_URL);
 // ROUTES
 
 app.use("/", testRoute);
+app.use("/api/uploadProfilePic", imageUpload);
 app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/quotes", quoteRoutes);

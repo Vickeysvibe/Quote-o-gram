@@ -2,6 +2,8 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import User from "../models/user.js";
 import createToken from "../utils/createToken.js";
+import { createAvatar } from "@dicebear/core";
+import { lorelei } from "@dicebear/collection";
 //Create a new user
 export const createUser = async (req, res) => {
   try {
@@ -12,6 +14,14 @@ export const createUser = async (req, res) => {
     if (isExists) {
       return res.status(400).send("User already exists");
     }
+
+    const avatar = createAvatar(lorelei, {
+      seed: name,
+    });
+
+    const svg = avatar.toString();
+
+    console.log(svg);
 
     const salt = await bcrypt.genSalt(10);
     const hash = await bcrypt.hash(password, salt);

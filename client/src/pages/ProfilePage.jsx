@@ -6,6 +6,7 @@ import { Layout } from "../components/Layout";
 import { getUserDetails, updateUser } from "../api/users/userData";
 import { getUserQuotes } from "../api/quotes/quoteData";
 import editProfile from "../assets/svg/editProfile.svg";
+import axios from "axios";
 
 export const ProfilePage = () => {
   const { id } = useParams();
@@ -15,6 +16,7 @@ export const ProfilePage = () => {
   const navigate = useNavigate();
   const [editState, setEditState] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
+  const [profilePic, setProfilePic] = useState(null);
 
   useEffect(() => {
     const effect = async () => {
@@ -36,18 +38,43 @@ export const ProfilePage = () => {
   useEffect(() => {
     setUserTemp(user);
   }, [user]);
+
   const handleRoute = () => {
     navigate("/");
   };
+
   const handleEditState = (e) => {
     setEditState(!editState);
   };
+
   const handleEditProfile = async (e) => {
     e.preventDefault();
     await updateUser(userTemp);
     setEditState(!editState);
     localStorage.setItem("user", JSON.stringify(userTemp));
     setUser(userTemp);
+  };
+
+  const handleProfilePicChange = (e) => {
+    setProfilePic(e.target.files[0]);
+  };
+
+  const handleProfilePicUpload = async () => {
+    const formData = new FormData();
+    formData.append("profilePic", profilePic);
+    formData.append("userId", user._id);
+
+    try {
+      const response = await axios.post(
+        `${process.env.REACT_APP_API_URL}/uploadProfilePic`,
+        formData
+      );
+      setUser({ ...user, profilePic: response.data.profilePic });
+      setUserTemp({ ...userTemp, profilePic: response.data.profilePic });
+      localStorage.setItem("user", JSON.stringify(userTemp));
+    } catch (error) {
+      console.error("Error uploading profile picture:", error);
+    }
   };
 
   return (
@@ -81,6 +108,10 @@ export const ProfilePage = () => {
                   }}
                   type="text"
                 />
+                <input type="file" onChange={handleProfilePicChange} />
+                <button type="button" onClick={handleProfilePicUpload}>
+                  Upload Profile Picture
+                </button>
                 <button type="submit">Update</button>
               </form>
             )}
