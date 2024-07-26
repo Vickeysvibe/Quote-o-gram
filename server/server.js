@@ -7,23 +7,27 @@ import userRoutes from "./routes/userRoutes.js";
 import authRoutes from "./routes/authRoutes.js";
 import quoteRoutes from "./routes/quoteRoutes.js";
 import testRoute from "./routes/testRoute.js";
-import router from "./routes/userRoutes.js";
 
-//CONFIGURATION
+// CONFIGURATION
 dotenv.config();
 const app = express();
 
-//MIDDLEWARES
+// MIDDLEWARES
 app.use(bodyParser.json({ limit: "30mb", extended: true }));
 app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
 
-app.use(cors());
+// Configure CORS
+const corsOptions = {
+  origin: "https://quote-o-gram.vercel.app", // Your frontend URL
+  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+  credentials: true, // Allow credentials (cookies, authorization headers, etc.)
+};
+app.use(cors(corsOptions));
 
-//CONNECT TO MONGODB
+// CONNECT TO MONGODB
 connectDB(process.env.MONGODB_URL);
 
-//ROUTES
-
+// ROUTES
 app.use("/", testRoute);
 app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
