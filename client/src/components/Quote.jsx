@@ -49,7 +49,9 @@ export const Quote = ({ quoteId, isAdmin }) => {
       }
     };
 
-    fetchUserData();
+    if (localStorage.getItem("token")) {
+      fetchUserData();
+    }
   }, [quoteId, showComment, editStatus]);
 
   useEffect(() => {

@@ -25,10 +25,11 @@ export const Login = () => {
       const end_point = process.env.REACT_APP_API_URL + "/auth/login";
       console.log(end_point);
       const res = await axios.post(end_point, { email, password });
-      localStorage.setItem("token", res.data.token);
-      localStorage.setItem("userId", res.data.user._id);
-      localStorage.setItem("user", JSON.stringify(res.data.user));
-      console.log(res.data);
+      if (res) {
+        localStorage.setItem("token", res.data.token);
+        localStorage.setItem("userId", res.data.user._id);
+        localStorage.setItem("user", JSON.stringify(res.data.user));
+      }
       navigate("/");
     } catch (err) {
       setError("Invalid email or password");

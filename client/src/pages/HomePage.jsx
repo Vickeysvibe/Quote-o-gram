@@ -16,6 +16,7 @@ export const HomePage = () => {
   }, [navigate]);
 
   if (!isAuthenticated) {
+    console.log("to token");
     return null; // Render nothing or a loading spinner while redirecting
   }
 
