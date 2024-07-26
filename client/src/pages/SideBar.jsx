@@ -19,14 +19,13 @@ export const SideBar = () => {
   useEffect(() => {
     const effect = async () => {
       try {
-        const response = await axios.get(
-          `${path}/quotes/${user._id}/userQuotes`,
-          {
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem("token")}`,
-            },
-          }
-        );
+        const url = `${path}/quotes/${user._id}/userQuotes`;
+        console.log("Fetching URL:", url);
+        const response = await axios.get(url, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        });
         setCount(response.data.length);
       } catch (error) {
         console.error("Error", error);

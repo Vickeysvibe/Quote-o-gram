@@ -1,14 +1,14 @@
 import axios from "axios";
 
 const path = process.env.REACT_APP_API_URL + "/quotes";
-const token = localStorage.getItem("token");
+const token = () => localStorage.getItem("token");
 
 export const getUserQuotes = async (userId) => {
   console.log(token);
   try {
     const response = await axios.get(`${path}/${userId}/userQuotes`, {
       headers: {
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${token()}`,
       },
     });
     return response.data.reverse();
@@ -20,7 +20,7 @@ export const getQuote = async (userId) => {
   try {
     const response = await axios.get(`${path}/${userId}`, {
       headers: {
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${token()}`,
       },
     });
     return response.data;
@@ -36,7 +36,7 @@ export const editUserProfile = async (data) => {
 export const getLikesCount = async (id) => {
   try {
     const response = await axios.get(`${path}/${id}`, {
-      headers: { Authorization: `Bearer ${token}` },
+      headers: { Authorization: `Bearer ${token()}` },
     });
     return response.data.likes.length;
   } catch (error) {
@@ -48,7 +48,7 @@ export const getQuoteComments = async (id) => {
   try {
     const response = await axios.get(`${path}/${id}/comments`, {
       headers: {
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${token()}`,
       },
     });
     return response.data.reverse();
@@ -63,7 +63,7 @@ export const likeQuote = async (id) => {
       `${path}/${id}`,
       {},
       {
-        headers: { Authorization: `Bearer ${token}` },
+        headers: { Authorization: `Bearer ${token()}` },
       }
     );
   } catch (error) {
@@ -77,7 +77,7 @@ export const editQuote = async (id, quote) => {
       `${path}/${id}`,
       { quote },
       {
-        headers: { Authorization: `Bearer ${token}` },
+        headers: { Authorization: `Bearer ${token()}` },
       }
     );
     return "success";
@@ -89,7 +89,7 @@ export const editQuote = async (id, quote) => {
 export const deleteQuote = async (id) => {
   try {
     await axios.delete(`${path}/${id}`, {
-      headers: { Authorization: `Bearer ${token}` },
+      headers: { Authorization: `Bearer ${token()}` },
     });
     return "success";
   } catch (error) {

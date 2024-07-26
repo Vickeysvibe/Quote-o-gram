@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const path = process.env.REACT_APP_API_URL + "/users";
-const token = localStorage.getItem("token");
+const token = () => localStorage.getItem("token");
 export const getUserDetails = async (id) => {
   if (!token) {
     throw new Error("No token found");
@@ -9,7 +9,7 @@ export const getUserDetails = async (id) => {
 
   try {
     const response = await axios.get(`${path}/${id}`, {
-      headers: { Authorization: `Bearer ${token}` },
+      headers: { Authorization: `Bearer ${token()}` },
     });
     return response.data; // Return only the data part of the response
   } catch (error) {
@@ -19,7 +19,7 @@ export const getUserDetails = async (id) => {
 };
 
 export const updateUser = async (data) => {
-  if (!token) {
+  if (!token()) {
     throw new Error("No token found");
   }
 
@@ -28,7 +28,7 @@ export const updateUser = async (data) => {
       `${path}/myProfile/edit`,
       { updates: data },
       {
-        headers: { Authorization: `Bearer ${token}` },
+        headers: { Authorization: `Bearer ${token()}` },
       }
     );
     return response.data; // Return only the data part of the response
