@@ -15,10 +15,7 @@ const app = express();
 app.use(bodyParser.json({ limit: "30mb", extended: true }));
 app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
 const corsOptions = {
-  origin: "*", // Allow all origins (adjust this to be more secure)
-  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-  preflightContinue: false,
-  optionsSuccessStatus: 204,
+  origin: "https://quote-o-gram.vercel.app", // Allow all origins (adjust this to be more secure)
 };
 
 app.use(cors(corsOptions));
