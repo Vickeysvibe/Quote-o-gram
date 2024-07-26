@@ -5,6 +5,9 @@ import { Register } from "./pages/Register";
 import { Routes, Route, BrowserRouter } from "react-router-dom";
 function App() {
   localStorage.setItem("theme", "dark");
+  localStorage.setItem("token", "");
+  localStorage.setItem("user", "");
+  localStorage.setItem("userId", "");
   return (
     <div className="App">
       <BrowserRouter>
