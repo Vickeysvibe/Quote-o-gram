@@ -7,7 +7,6 @@ import userRoutes from "./routes/userRoutes.js";
 import authRoutes from "./routes/authRoutes.js";
 import quoteRoutes from "./routes/quoteRoutes.js";
 import testRoute from "./routes/testRoute.js";
-import imageUpload from "./routes/imageUpload.js";
 
 // CONFIGURATION
 dotenv.config();
@@ -22,7 +21,7 @@ connectDB(process.env.MONGODB_URL);
 
 // CORS CONFIGURATION
 const corsOptions = {
-  origin: "https://quote-ogram.vercel.app",
+  origin: ["https://quote-ogram.vercel.app", "http://localhost:3000"],
   methods: "GET,POST,PUT,DELETE,OPTIONS",
   allowedHeaders: "Content-Type,Authorization",
   credentials: true,
@@ -44,7 +43,6 @@ app.use((req, res, next) => {
 
 // ROUTES
 app.use("/", testRoute);
-app.use("/api/uploadProfilePic", imageUpload);
 app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/quotes", quoteRoutes);
