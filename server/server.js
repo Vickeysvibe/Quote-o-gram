@@ -33,6 +33,15 @@ app.use(cors(corsOptions));
 // Explicitly handle OPTIONS requests for all routes
 app.options("*", cors(corsOptions));
 
+app.use((req, res, next) => {
+  console.log(`Incoming request: ${req.method} ${req.url}`);
+  res.on("finish", () => {
+    console.log(`Response status: ${res.statusCode}`);
+    console.log(`Response headers: ${JSON.stringify(res.getHeaders())}`);
+  });
+  next();
+});
+
 // ROUTES
 app.use("/", testRoute);
 app.use("/api/uploadProfilePic", imageUpload);
