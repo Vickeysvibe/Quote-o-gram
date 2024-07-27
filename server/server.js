@@ -22,7 +22,13 @@ connectDB(process.env.MONGODB_URL);
 
 // ROUTES
 
-app.use(cors());
+/* const corsOptions = {
+  origin: "https://localhost:3000/*",
+  methods: "GET,POST,PUT,DELETE",
+  allowedHeaders: "Content-Type,Authorization",
+  credentials: true,
+}; */
+app.use(cors({ origin: "https://quote-o-gram.vercel.app" }));
 app.use("/", testRoute);
 app.use("/api/uploadProfilePic", imageUpload);
 app.use("/api/auth", authRoutes);
