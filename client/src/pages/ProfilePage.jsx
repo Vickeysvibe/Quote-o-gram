@@ -21,7 +21,9 @@ export const ProfilePage = () => {
       try {
         const localUser = JSON.parse(localStorage.getItem("user"));
         const userId = id ? id : localUser._id;
+        console.log(userId, localUser._id);
         setIsAdmin(userId === localUser._id);
+        console.log(isAdmin);
         setQuotes(await getUserQuotes(userId));
         setUser(
           id ? await getUserDetails(id) : await getUserDetails(localUser._id)
@@ -85,9 +87,11 @@ export const ProfilePage = () => {
               </form>
             )}
           </div>
-          <div className="edit">
-            <img onClick={handleEditState} src={editProfile} alt="edit" />
-          </div>
+          {isAdmin && (
+            <div className="edit">
+              <img onClick={handleEditState} src={editProfile} alt="edit" />
+            </div>
+          )}
         </div>
         {quotes.map((quote) => (
           <Quote key={quote._id} quoteId={quote._id} isAdmin={isAdmin} />
