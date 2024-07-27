@@ -30,6 +30,19 @@ const corsOptions = {
 };
 app.use(cors(corsOptions));
 
+app.use((req, res, next) => {
+  res.setHeader(
+    "Access-Control-Allow-Origin",
+    "https://quote-o-gram.vercel.app"
+  );
+  res.setHeader(
+    "Access-Control-Allow-Methods",
+    "POST, GET, PUT, DELETE, OPTIONS"
+  );
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+  next();
+});
+
 // ROUTES
 app.use("/", testRoute);
 app.use("/api/uploadProfilePic", imageUpload);
