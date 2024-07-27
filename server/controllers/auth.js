@@ -17,7 +17,7 @@ function getRandomProfilePicture() {
 //Create a new user
 export const createUser = async (req, res) => {
   try {
-    const { name, email, password } = req.body;
+    const { name, email, password, description } = req.body;
     console.log(name, email, password);
     //check if the user already exusts
     const isExists = await User.findOne({ email });
@@ -33,6 +33,7 @@ export const createUser = async (req, res) => {
       email,
       password: hash,
       profilePic: randomProfilePic,
+      description,
     });
     await user.save();
     res.status(201).send(user);
