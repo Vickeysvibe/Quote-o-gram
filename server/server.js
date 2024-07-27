@@ -18,28 +18,7 @@ app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
 
 // CONNECT TO MONGODB
 connectDB(process.env.MONGODB_URL);
-
-// CORS CONFIGURATION
-const corsOptions = {
-  origin: ["https://quote-ogram.vercel.app", "http://localhost:3000"],
-  methods: "GET,POST,PUT,DELETE,OPTIONS",
-  allowedHeaders: "Content-Type,Authorization",
-  credentials: true,
-  optionsSuccessStatus: 200,
-};
-app.use(cors(corsOptions));
-
-// Explicitly handle OPTIONS requests for all routes
-app.options("*", cors(corsOptions));
-
-app.use((req, res, next) => {
-  console.log(`Incoming request: ${req.method} ${req.url}`);
-  res.on("finish", () => {
-    console.log(`Response status: ${res.statusCode}`);
-    console.log(`Response headers: ${JSON.stringify(res.getHeaders())}`);
-  });
-  next();
-});
+app.use(cors());
 
 // ROUTES
 app.use("/", testRoute);
