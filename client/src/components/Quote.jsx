@@ -216,6 +216,7 @@ export const Quote = ({ quoteId, isAdmin }) => {
                 />
               </svg>
             )}
+            <p>{likeCount}</p>
             <svg
               viewBox="0 0 24 24"
               aria-hidden="true"
@@ -231,7 +232,6 @@ export const Quote = ({ quoteId, isAdmin }) => {
                 ></path>
               </g>
             </svg>
-            <p>{likeCount}</p>
           </div>
           {showComment ? (
             <>

@@ -8,6 +8,7 @@ export const Register = () => {
   const [user, setUser] = useState({
     name: "",
     email: "",
+    description: "",
     password: "",
     confirm_password: "",
   });
@@ -16,7 +17,7 @@ export const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError(""); // Reset error message
-    const { name, email, password, confirm_password } = user;
+    const { name, email, password, description, confirm_password } = user;
 
     if (!name || !email || !password || !confirm_password) {
       setError("All fields are required");
@@ -31,7 +32,7 @@ export const Register = () => {
     try {
       const end_point = process.env.REACT_APP_API_URL + "/auth/register";
       console.log(end_point);
-      const data = { name, email, password };
+      const data = { name, email, password, description };
       const res = await axios.post(end_point, data);
       console.log(res.data);
       navigate("/login");
@@ -70,6 +71,15 @@ export const Register = () => {
               placeholder="Email"
               value={user.email}
               onChange={(ev) => setUser({ ...user, email: ev.target.value })}
+            />
+            <input
+              required
+              type="text"
+              placeholder="Bio"
+              value={user.description}
+              onChange={(ev) =>
+                setUser({ ...user, description: ev.target.value })
+              }
             />
             <input
               required
