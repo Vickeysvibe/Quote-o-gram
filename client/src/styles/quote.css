@@ -12,6 +12,7 @@
 
 /* Main Container */
 .tweet-container {
+  min-height: 130px;
   background: var(--secondary);
   /*  border: 1px solid #7575754f; */
   padding: 1rem 2rem;
@@ -51,7 +52,7 @@
     }
   }
   .utils {
-    img {
+    svg {
       height: 13px;
       border: none;
     }
@@ -161,5 +162,21 @@ input {
   }
   .title {
     width: 60vw;
+  }
+}
+
+.skeleton {
+  animation: skeleton-loading 1s linear infinite alternate;
+}
+
+@keyframes skeleton-loading {
+  0% {
+    background-color: var(--primary);
+  }
+  50% {
+    background-color: var(--secondary);
+  }
+  100% {
+    background-color: var(--primary);
   }
 }

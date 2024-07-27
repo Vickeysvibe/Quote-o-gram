@@ -58,24 +58,30 @@ export const Register = () => {
           {error && <p className="error">{error}</p>}
           <form onSubmit={handleSubmit}>
             <input
+              required
               type="text"
               placeholder="Name"
               value={user.name}
               onChange={(ev) => setUser({ ...user, name: ev.target.value })}
             />
             <input
+              required
               type="email"
               placeholder="Email"
               value={user.email}
               onChange={(ev) => setUser({ ...user, email: ev.target.value })}
             />
             <input
+              required
+              minlength="8"
               type="password"
               placeholder="Password"
               value={user.password}
               onChange={(ev) => setUser({ ...user, password: ev.target.value })}
             />
             <input
+              required
+              minlength="8"
               type="password"
               placeholder="Confirm Password"
               value={user.confirm_password}

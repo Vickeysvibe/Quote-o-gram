@@ -36,7 +36,22 @@ export const Layout = ({ children }) => {
     return (
       <div className="overall">
         <div className="toggle">
-          <img onClick={() => setMenuOpen(!isMenuOpen)} src={menu} alt="E" />
+          <svg
+            onClick={() => setMenuOpen(!isMenuOpen)}
+            src={menu}
+            alt="E"
+            xmlns="http://www.w3.org/2000/svg"
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+          >
+            <path
+              fill={
+                localStorage.getItem("theme") === "dark" ? "white" : "black"
+              }
+              d="M3 18v-2h18v2zm0-5v-2h18v2zm0-5V6h18v2z"
+            />
+          </svg>
         </div>
         {isMenuOpen && <div className="overlay" onClick={closeMenu}></div>}
         <div className={`sidebar- ${isMenuOpen ? "sidebar-open" : ""}`}>

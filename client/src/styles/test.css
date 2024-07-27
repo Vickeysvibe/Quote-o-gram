@@ -121,10 +121,12 @@
       background: var(--secondary);
       padding: 1rem 2rem;
       width: 88%;
+      min-height: 180px;
       border-radius: 1.5rem;
       display: flex;
       justify-content: space-evenly;
       margin: 15px auto;
+
       img {
         height: 100px;
         padding: 30px;
@@ -169,7 +171,8 @@
         display: flex;
         width: 30%;
         justify-content: end;
-        img {
+        svg {
+          padding-top: 20px;
           cursor: pointer;
           height: 20px;
           border-radius: 0px;
@@ -180,6 +183,7 @@
   .main::-webkit-scrollbar {
     display: none;
   }
+
   .right {
     width: 20%;
     height: 60%;
@@ -193,6 +197,21 @@
   }
 }
 
+.skeleton {
+  animation: skeleton-loading 1s linear infinite alternate;
+}
+
+@keyframes skeleton-loading {
+  0% {
+    background-color: var(--primary);
+  }
+  50% {
+    background-color: var(--secondary);
+  }
+  100% {
+    background-color: var(--primary);
+  }
+}
 /* The switch - the box around the slider */
 .switch {
   position: relative;

@@ -4,6 +4,16 @@ import User from "../models/user.js";
 import createToken from "../utils/createToken.js";
 import { createAvatar } from "@dicebear/core";
 import { lorelei } from "@dicebear/collection";
+
+import { profilePictures } from "../utils/profilePics.js";
+
+function getRandomProfilePicture() {
+  const randomIndex = Math.floor(Math.random() * profilePictures.length);
+  return profilePictures[randomIndex];
+}
+
+// Example usage
+
 //Create a new user
 export const createUser = async (req, res) => {
   try {
@@ -15,17 +25,15 @@ export const createUser = async (req, res) => {
       return res.status(400).send("User already exists");
     }
 
-    const avatar = createAvatar(lorelei, {
-      seed: name,
-    });
-
-    const svg = avatar.toString();
-
-    console.log(svg);
-
     const salt = await bcrypt.genSalt(10);
     const hash = await bcrypt.hash(password, salt);
-    const user = new User({ name, email, password: hash });
+    const randomProfilePic = getRandomProfilePicture();
+    const user = new User({
+      name,
+      email,
+      password: hash,
+      profilePic: randomProfilePic,
+    });
     await user.save();
     res.status(201).send(user);
   } catch (error) {
