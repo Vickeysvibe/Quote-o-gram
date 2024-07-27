@@ -20,15 +20,17 @@ app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
 // CONNECT TO MONGODB
 connectDB(process.env.MONGODB_URL);
 
-// ROUTES
-
-/* const corsOptions = {
-  origin: "https://localhost:3000/*",
-  methods: "GET,POST,PUT,DELETE",
+// CORS CONFIGURATION
+const corsOptions = {
+  origin: "https://quote-o-gram.vercel.app",
+  methods: "GET,POST,PUT,DELETE,OPTIONS",
   allowedHeaders: "Content-Type,Authorization",
   credentials: true,
-}; */
-app.use(cors({ origin: "https://quote-o-gram.vercel.app" }));
+  optionsSuccessStatus: 200,
+};
+app.use(cors(corsOptions));
+
+// ROUTES
 app.use("/", testRoute);
 app.use("/api/uploadProfilePic", imageUpload);
 app.use("/api/auth", authRoutes);
