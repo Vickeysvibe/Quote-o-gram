@@ -17,7 +17,7 @@ const app = express();
 app.use(bodyParser.json({ limit: "30mb", extended: true }));
 app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
 
-app.use(cors({ origin: true, credentials: true }));
+app.use(cors());
 
 // CONNECT TO MONGODB
 connectDB(process.env.MONGODB_URL);
