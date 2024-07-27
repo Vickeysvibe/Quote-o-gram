@@ -22,7 +22,7 @@ connectDB(process.env.MONGODB_URL);
 
 // CORS CONFIGURATION
 const corsOptions = {
-  origin: "http://localhost:3000",
+  origin: "https://quote-ogram.vercel.app",
   methods: "GET,POST,PUT,DELETE,OPTIONS",
   allowedHeaders: "Content-Type,Authorization",
   credentials: true,
