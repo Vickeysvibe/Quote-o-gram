@@ -1,5 +1,5 @@
 .container {
-  height: 320px;
+  height: 360px;
   width: 50%;
   min-width: 500px;
   background-color: var(--secondary);
@@ -43,6 +43,13 @@
         padding: 7px 10px;
         margin: 5px 0px;
         color: var(--color);
+      }
+      .gender {
+        display: flex;
+        margin: 10px 0;
+        label {
+          margin-right: 30px;
+        }
       }
       button {
         cursor: pointer;

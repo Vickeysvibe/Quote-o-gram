@@ -13,6 +13,7 @@ export const Register = () => {
     confirm_password: "",
   });
   const [error, setError] = useState("");
+  const [gender, setGender] = useState("boy");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -32,7 +33,7 @@ export const Register = () => {
     try {
       const end_point = process.env.REACT_APP_API_URL + "/auth/register";
       console.log(end_point);
-      const data = { name, email, password, description };
+      const data = { name, email, password, description, gender };
       const res = await axios.post(end_point, data);
       console.log(res.data);
       navigate("/login");
@@ -47,6 +48,10 @@ export const Register = () => {
       navigate("/");
     }
   }, [navigate]);
+
+  useEffect(() => {
+    console.log(gender);
+  }, [gender]);
 
   return (
     <div className="fullScreen">
@@ -99,6 +104,28 @@ export const Register = () => {
                 setUser({ ...user, confirm_password: ev.target.value })
               }
             />
+            <div className="gender">
+              <input
+                type="radio"
+                id="html"
+                name="fav_language"
+                onChange={() => {
+                  setGender("boy");
+                }}
+                value="HTML"
+              />
+                <label for="html">Boy</label> {" "}
+              <input
+                type="radio"
+                id="css"
+                name="fav_language"
+                value="CSS"
+                onChange={() => {
+                  setGender("girl");
+                }}
+              />
+                <label for="css">Girl</label>
+            </div>
             <button type="submit">Register</button>
             <p>
               Already a user? <Link to={"/login"}>Login</Link>

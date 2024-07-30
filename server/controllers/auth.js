@@ -17,13 +17,16 @@ function getRandomProfilePicture() {
 //Create a new user
 export const createUser = async (req, res) => {
   try {
-    const { name, email, password, description } = req.body;
+    const { name, email, password, description, gender } = req.body;
     console.log(name, email, password);
     //check if the user already exusts
     const isExists = await User.findOne({ email });
     if (isExists) {
       return res.status(400).send("User already exists");
     }
+    const newName = name.replace(/\s/g, "");
+
+    const url = `https://avatar.iran.liara.run/public/${gender}?username=${newName}`;
 
     const salt = await bcrypt.genSalt(10);
     const hash = await bcrypt.hash(password, salt);
@@ -32,7 +35,7 @@ export const createUser = async (req, res) => {
       name,
       email,
       password: hash,
-      profilePic: randomProfilePic,
+      profilePic: url,
       description,
     });
     await user.save();
