@@ -16,13 +16,12 @@ export const ProfilePage = () => {
   const [editState, setEditState] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
   const [theme, setTheme] = useState(localStorage.getItem("theme"));
+
   useEffect(() => {
     const effect = async () => {
       try {
         const localUser = JSON.parse(localStorage.getItem("user"));
         const userId = id ? id : localUser._id;
-        console.log(userId, localUser._id);
-        console.log(userId === localUser._id);
         setIsAdmin(userId === localUser._id);
         setQuotes(await getUserQuotes(userId));
         setUser(
@@ -34,6 +33,7 @@ export const ProfilePage = () => {
     };
     effect();
   }, [id]);
+
   useEffect(() => {
     const intervalId = setInterval(() => {
       const storedTheme = localStorage.getItem("theme");
@@ -44,10 +44,11 @@ export const ProfilePage = () => {
 
     return () => clearInterval(intervalId);
   }, [theme]);
+
   useEffect(() => {
     setUserTemp(user);
-    console.log(user);
   }, [user]);
+
   const handleRoute = () => {
     navigate("/");
   };
@@ -119,8 +120,8 @@ export const ProfilePage = () => {
         ) : (
           <div className="user-profile skeleton"></div>
         )}
-        {quotes.map((quote) => (
-          <Quote key={quote._id} quoteId={quote._id} isAdmin={isAdmin} />
+        {quotes?.map((quote) => (
+          <Quote key={quote._id} quote={quote} isAdmin={isAdmin} />
         ))}
       </div>
     </Layout>

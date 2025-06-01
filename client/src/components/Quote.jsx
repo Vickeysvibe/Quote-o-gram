@@ -2,57 +2,19 @@ import React, { useEffect, useState } from "react";
 import "../styles/quote.css";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { getUserDetails } from "../api/users/userData";
-import {
-  deleteQuote,
-  editQuote,
-  getLikesCount,
-  getQuote,
-  getQuoteComments,
-  likeQuote,
-} from "../api/quotes/quoteData";
+import { deleteQuote, editQuote, likeQuote } from "../api/quotes/quoteData";
 import editIcon from "../assets/svg/editIcon.svg";
 import deleteIcon from "../assets/svg/deleteIcon.svg";
 
-export const Quote = ({ quoteId, isAdmin }) => {
+export const Quote = ({ quote, isAdmin, handleReload }) => {
   const navigate = useNavigate();
-  const [quote, setQuote] = useState({});
+  const [newQuote, setNewQuote] = useState(quote.quote);
   const [showComment, setShowComment] = useState(false);
+  const [likeCount, setLikeCount] = useState(quote.likes.length);
   const [comment, setComment] = useState("");
-  const [like, setLike] = useState(false);
-  const [user, setUser] = useState({});
-  const [likeCount, setLikeCount] = useState(0);
-  const [comments, setcomments] = useState([]);
+  const [like, setLike] = useState(quote.likedByYou);
   const [editStatus, setEditStatus] = useState(false);
   const [theme, setTheme] = useState(localStorage.getItem("theme"));
-
-  useEffect(() => {
-    const fetchUserData = async () => {
-      try {
-        const fetchedQuote = await getQuote(quoteId);
-        setQuote(fetchedQuote);
-
-        if (fetchedQuote) {
-          const fetchedComments = await getQuoteComments(fetchedQuote._id);
-          setcomments(fetchedComments);
-          const fetchedUser = await getUserDetails(fetchedQuote.user);
-          setUser(fetchedUser);
-          const userId = JSON.parse(localStorage.getItem("user"))?._id;
-          if (userId) {
-            setLike(fetchedQuote.likes.includes(userId));
-          }
-          const fetchedLikeCount = await getLikesCount(fetchedQuote._id);
-          setLikeCount(fetchedLikeCount);
-        }
-      } catch (error) {
-        console.error("Error fetching user data:", error);
-      }
-    };
-
-    if (localStorage.getItem("token")) {
-      fetchUserData();
-    }
-  }, [quoteId, showComment, editStatus]);
 
   useEffect(() => {
     const intervalId = setInterval(() => {
@@ -74,7 +36,6 @@ export const Quote = ({ quoteId, isAdmin }) => {
       setLikeCount((prevCount) =>
         newLikeStatus ? prevCount + 1 : prevCount - 1
       );
-
       await likeQuote(quote._id);
     } catch (error) {
       console.error("Error updating like:", error);
@@ -92,17 +53,18 @@ export const Quote = ({ quoteId, isAdmin }) => {
         }
       );
       setComment("");
-      setShowComment(!showComment);
+      handleReload();
     } catch (error) {
       console.log(error);
     }
   };
+
   const handleEditClick = () => {
     setEditStatus(!editStatus);
   };
   const handleUpdateQuote = async (e) => {
     e.preventDefault();
-    await editQuote(quote._id, quote.quote);
+    await editQuote(quote._id, newQuote);
     setEditStatus(!editStatus);
   };
 
@@ -110,21 +72,22 @@ export const Quote = ({ quoteId, isAdmin }) => {
     await deleteQuote(quote._id);
     window.location.reload();
   };
-  if (user.name && quote.quote) {
+
+  if (quote?.quote) {
     return (
       <div className="tweet-container">
         <div className="quote-image">
-          <img src={user.profilePic} alt="profile pic" />
+          <img src={quote.user.profilePic} alt="profile pic" />
         </div>
         <div>
           <div
             className="title"
             onClick={() => {
-              navigate(`/profile/${user._id}`);
+              navigate(`/profile/${quote.user._id}`);
             }}
           >
             <div className="info">
-              <h4 className="name">{user.name}</h4>
+              <h4 className="name">{quote.user.name}</h4>
             </div>
             {isAdmin && (
               <div className="utils">
@@ -172,10 +135,8 @@ export const Quote = ({ quoteId, isAdmin }) => {
               <form onSubmit={handleUpdateQuote}>
                 <input
                   type="text"
-                  value={quote.quote}
-                  onChange={(e) =>
-                    setQuote({ ...quote, quote: e.target.value })
-                  }
+                  value={newQuote}
+                  onChange={(e) => setNewQuote(e.target.value)}
                 />
                 <button type="submit">Update</button>
               </form>
@@ -235,7 +196,7 @@ export const Quote = ({ quoteId, isAdmin }) => {
           </div>
           {showComment ? (
             <>
-              {comments.map((com) => (
+              {quote.comments.map((com) => (
                 <div key={com._id} className="comment">
                   <img src={com.user.profilePic} alt="face" />
                   <p>{com.content}</p>
@@ -243,6 +204,7 @@ export const Quote = ({ quoteId, isAdmin }) => {
               ))}
               <form onSubmit={handleComment}>
                 <input
+                  className="commentInput"
                   type="text"
                   value={comment}
                   onChange={(e) => {

@@ -10,6 +10,14 @@
   --square-ball-two: #009eff;
 }
 
+.commentInput {
+  width: 60%;
+  font-size: 12px;
+  padding: 5px 10px;
+  border-radius: 5px;
+  margin-left: 30px;
+}
+
 /* Main Container */
 .tweet-container {
   min-height: 130px;
@@ -97,14 +105,21 @@
   }
 }
 
+.tweet {
+  max-width: 60vw; /* Use max-width instead of width */
+  margin-left: 30px;
+  overflow: hidden; /* Contain all content */
+}
+
 .tweet p {
-  width: 60vw;
   font-weight: 300;
   font-size: 13px;
   margin: 0;
-  margin-left: 30px;
+  word-break: break-word; /* Break words if needed */
+  overflow-wrap: anywhere; /* More aggressive word breaking */
+  white-space: normal; /* Ensure normal line wrapping */
+  hyphens: auto; /* Add hyphens when breaking words */
 }
-
 /* Tweet time and date section */
 
 .time-and-date {
@@ -147,7 +162,7 @@
   }
   p {
     padding: 0 20px;
-    font-size: 10px;
+    font-size: 12px;
   }
 }
 input {

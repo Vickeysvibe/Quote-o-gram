@@ -9,12 +9,13 @@ export const Layout = ({ children }) => {
   const [isMenuOpen, setMenuOpen] = useState(false);
   const [width, setWidth] = useState(window.innerWidth);
   const closeMenu = () => setMenuOpen(false);
+
   useEffect(() => {
-    console.log("layout");
     const handleResize = () => setWidth(window.innerWidth);
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
+
   if (width >= 768) {
     return (
       <div className="overall">

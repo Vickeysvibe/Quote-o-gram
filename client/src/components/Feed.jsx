@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import FormatQuoteIcon from "@mui/icons-material/FormatQuote";
 import axios from "axios";
 import "../styles/layout.css";
+
 export const Feed = ({ handleReload }) => {
   const path = process.env.REACT_APP_API_URL;
   const token = localStorage.getItem("token");
