@@ -9,11 +9,7 @@ Quote-o-gram is a text-based social media platform where users can share and dis
   - [Prerequisites](#prerequisites)
   - [Installation](#installation)
 - [Usage](#usage)
-- [Folder Structure](#folder-structure)
-- [API Documentation](#api-documentation)
-- [Contributing](#contributing)
-- [License](#license)
-- [Contact](#contact)
+
 
 ## Features
 
