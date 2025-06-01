@@ -5,7 +5,7 @@ const quotesSchema = new mongoose.Schema({
   quote: { type: String, required: true },
   createdAt: { type: Date, default: Date.now() },
   updatedAt: { type: Date, default: Date.now() },
-  comments: [{ type: mongoose.Schema.Types.ObjectId, ref: "Comment" }],
+  comments: [{ type: mongoose.Schema.Types.ObjectId, ref: "Comments" }], // Use "Comments" here
   likes: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
 });
 

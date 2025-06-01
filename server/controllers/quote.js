@@ -17,13 +17,37 @@ export const createQuote = async (req, res) => {
   }
 };
 
-//Get all quotes
+// Get all quotes
 export const getQuotes = async (req, res) => {
   try {
-    const quotes = await Quotes.find();
-    res.status(200).json(quotes);
+    const quotes = await Quotes.find()
+      .populate([
+        { path: "user", select: "name profilePic" },
+        {
+          path: "comments",
+          populate: {
+            path: "user",
+            select: "name profilePic",
+          },
+          options: { sort: { createdAt: -1 } },
+        },
+      ])
+      .sort({ createdAt: -1 })
+      .lean();
+
+    // Properly check if current user liked each quote
+    const quotesWithLikeStatus = quotes.map((quote) => ({
+      ...quote,
+      likedByYou:
+        quote.likes &&
+        quote.likes.some(
+          (like) => like && like.toString() === req.user._id.toString()
+        ),
+    }));
+
+    res.status(200).json(quotesWithLikeStatus);
   } catch (error) {
-    res.status(500).json({ message: error });
+    res.status(500).json({ message: error.message });
   }
 };
 
@@ -31,8 +55,31 @@ export const getQuotes = async (req, res) => {
 export const getUserQuotes = async (req, res) => {
   try {
     const { id } = req.params;
-    const quotes = await Quotes.find({ user: id });
-    res.status(200).json(quotes);
+    const quotes = await Quotes.find({ user: id })
+      .populate([
+        { path: "user", select: "name profilePic" },
+        {
+          path: "comments",
+          populate: {
+            path: "user",
+            select: "name profilePic",
+          },
+          options: { sort: { createdAt: -1 } },
+        },
+      ])
+      .lean();
+
+    // Properly check if current user liked each quote
+    const quotesWithLikeStatus = quotes.map((quote) => ({
+      ...quote,
+      likedByYou:
+        quote.likes &&
+        quote.likes.some(
+          (like) => like && like.toString() === req.user._id.toString()
+        ),
+    }));
+
+    res.status(200).json(quotesWithLikeStatus);
   } catch (error) {
     res.status(500).json({ message: error });
   }
@@ -94,6 +141,9 @@ export const commentOnQuote = async (req, res) => {
       quote: id,
     });
     await comment.save();
+    await Quotes.findByIdAndUpdate(id, {
+      $push: { comments: comment._id },
+    });
     res.status(200).json(comment);
   } catch (error) {
     res.status(500).json({ message: error });

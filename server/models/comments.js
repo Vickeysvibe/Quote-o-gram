@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 const commentSchema = new mongoose.Schema({
   quote: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "Quotes",
+    ref: "Quotes", // Use "Quotes" here to match the model name
     required: true,
   },
   user: {
